@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="data:," />
     <title>Chess Openings Trainer</title>
     <style>
@@ -11,7 +11,7 @@
     </style>
     <style>
       :root {
-        color-scheme: light;
+        color-scheme: light dark;
         --bg: #fafafa;
         --surface: #ffffff;
         --surface-2: #f3f3f1;
@@ -321,7 +321,7 @@
         </div>
       </section>
 
-      <footer>Main lines follow standard master practice. Commentary focuses on the plans and ideas, not engine-perfect detail — the goal is positions you understand, not moves you memorize.</footer>
+      <footer>"That's all life is. Moments you build only to see washed away. But that doesn't mean it's all for nothing." - Daxo, Dark Age</footer>
     </div>
 
 <script>
@@ -343,7 +343,7 @@
   });
 })();
 /* ---------- Tiny chess core: positions as 64-array, moves in UCI ---------- */
-var GLYPH = { K:"\u265A", Q:"\u265B", R:"\u265C", B:"\u265D", N:"\u265E", P:"\u265F" };
+var GLYPH = { w:{K:"\u2654\uFE0E",Q:"\u2655\uFE0E",R:"\u2656\uFE0E",B:"\u2657\uFE0E",N:"\u2658\uFE0E",P:"\u2659\uFE0E"}, b:{K:"\u265A\uFE0E",Q:"\u265B\uFE0E",R:"\u265C\uFE0E",B:"\u265D\uFE0E",N:"\u265E\uFE0E",P:"\u265F\uFE0E"} };
 var START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
 function parsePlacement(s) {
@@ -405,7 +405,7 @@ function renderBoard(el, board, opts) {
     if (p) {
       var s = document.createElement("span");
       s.className = "pc " + p[0];
-      s.textContent = GLYPH[p[1]];
+      s.textContent = GLYPH[p[0]][p[1]];
       d.appendChild(s);
     }
     el.appendChild(d);
