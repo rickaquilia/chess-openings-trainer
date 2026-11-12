@@ -28,6 +28,19 @@
         --piece-b: #171716;
         --shadow: 0 1px 2px rgba(20,20,20,.05), 0 8px 24px rgba(20,20,20,.05);
       }
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #171716;
+        --surface: #20201f;
+        --surface-2: #2a2a28;
+        --ink: #ececea;
+        --muted: #a6a6a0;
+        --line: #353532;
+        --accent: #d4695c;
+        --accent-soft: #38211d;
+        --ok: #6fae7d;
+        --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.35);
+      }
       * { box-sizing: border-box; }
       html { -webkit-text-size-adjust: 100%; }
       body {
@@ -52,6 +65,11 @@
         font-weight: 550; cursor: pointer;
       }
       nav.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+      .theme-toggle {
+        appearance: none; border: 1px solid var(--line); background: var(--surface);
+        color: var(--ink); border-radius: 999px; padding: 8px 16px; font-size: 14px;
+        font-weight: 550; cursor: pointer; margin-top: 12px;
+      }
 
       h2 { font-size: 19px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 4px; }
       h3 { font-size: 15px; font-weight: 650; margin: 0 0 6px; }
@@ -189,6 +207,7 @@
         <h1>Chess Openings Trainer</h1>
         <p>Learn the <em>ideas</em> behind six essential openings — why each move is played, what both sides are trying to do, and the traps that catch intermediate players out. Then sharpen your tactics on the same board.</p>
         <p class="byline">Vibe Coded by Rick Aquilia</p>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">🌙 Dark</button>
       </header>
 
       <nav class="tabs" role="tablist" aria-label="Sections">
@@ -303,6 +322,22 @@
 
 <script>
 "use strict";
+/* ---------- Theme: light is the default, toggle persists ---------- */
+(function(){
+  var KEY="chess-theme";
+  var btn=document.getElementById("themeToggle");
+  function apply(t){
+    if(t==="dark"){document.documentElement.setAttribute("data-theme","dark");btn.textContent="\u2600\uFE0F Light";btn.setAttribute("aria-label","Switch to light mode");}
+    else{document.documentElement.removeAttribute("data-theme");btn.textContent="\uD83C\uDF19 Dark";btn.setAttribute("aria-label","Switch to dark mode");}
+  }
+  var saved=null; try{saved=localStorage.getItem(KEY);}catch(e){}
+  apply(saved==="dark"?"dark":"light");
+  btn.addEventListener("click",function(){
+    var next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+    try{localStorage.setItem(KEY,next);}catch(e){}
+    apply(next);
+  });
+})();
 /* ---------- Tiny chess core: positions as 64-array, moves in UCI ---------- */
 var GLYPH = { K:"\u265A", Q:"\u265B", R:"\u265C", B:"\u265D", N:"\u265E", P:"\u265F" };
 var START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
